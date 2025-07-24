@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>👀 리뷰 목록</title>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<body>
+<h1>👀 리뷰 목록</h1>
+
+<p>
+    <a th:href="@{|/${movie.id}/addReview|}">➕ 리뷰 등록</a>
+    <a th:href="@{/movies}">📋 영화 목록</a>
+</p>
+
+<table>
+    <thead>
+    <tr>
+        <td>⭐️ 평점</td>
+        <td>💬 평가</td>
+        <td>🗣️ 등록인</td>
+        <td>⚙️ 관리</td>
+    </tr>
+    </thead>
+    <tbody th:each="review: ${reviews}">
+    <tr>
+        <td th:text="${review.rating}"></td>
+        <td th:text="${review.comment}"></td>
+        <td th:text="${review.reviewer}"></td>
+        <td>
+            <a th:href="@{|/${movie.id}/editReview/${review.id}|}">수정</a>
+            <form th:action="@{|/${movie.id}/deleteReview/${review.id}|}" method="post" style="display: inline">
+                <button type="submit">삭제</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

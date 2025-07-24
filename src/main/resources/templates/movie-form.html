@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${movieDto.id} == null ? '➕ 영화 등록' : '✏️ 영화 정보 수정'"></title>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<body>
+<h1 th:text="${movieDto.id} == null ? '➕ 영화 등록' : '✏️ 영화 정보 수정'"></h1>
+
+<p>
+    <a th:href="movie">영화 목록</a>
+</p>
+
+<div th:if="${error}" class="error" th:text="${error}"></div>
+<form th:action="${movieDto.id} == null ? @{/movies/addMovie} : @{/movies/editMovie}" th:object="${movieDto}" method="post" class="form-container">
+    <input type="hidden" th:field="*{id}">
+    <p>
+        <label>
+            영화명:
+            <input type="text" th:field="*{title}" />
+        </label>
+    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+    </p>
+    <p>
+        <label>
+            개봉연도:
+            <input type="number" th:field="*{release_year}" />
+        </label>
+    <div th:if="${#fields.hasErrors('release_year')}" th:errors="*{release_year}"></div>
+    </p>
+    <button type="submit">저장</button>
+    <a th:href="@{/movies}" class="cancel">취소</a>
+</form>
+</body>
+</html>

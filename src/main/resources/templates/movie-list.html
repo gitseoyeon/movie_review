@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>🎥 영화 목록</title>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<body>
+<h1>🎥 영화 목록</h1>
+
+<p>
+    <a href="/movies/addMovie">➕ 영화 등록</a>
+</p>
+
+<table>
+    <thead>
+    <tr>
+        <td>🎬 영화명</td>
+        <td>🎬 개봉연도</td>
+        <td>💬 리뷰</td>
+        <td>⚙️ 관리</td>
+    </tr>
+    </thead>
+    <tbody th:each="movie: ${movies}">
+    <tr>
+        <td th:text="${movie.title}"></td>
+        <td th:text="${movie.release_year}"></td>
+        <td>
+            <a th:href="@{${movie.id} + '/reviews'}">리뷰 보기</a>
+        </td>
+        <td>
+            <a th:href="@{'/movies/editMovie/' + ${movie.id}}">수정</a>
+            <form th:action="@{'/movies/deleteMovie/' + ${movie.id}}" method="post" style="display: inline">
+                <button type="submit">삭제</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

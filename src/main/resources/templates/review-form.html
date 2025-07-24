@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${reviewDto.id} == null ? '➕ 리뷰 등록' : '✏️ 리뷰 수정'"></title>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<body>
+<h1 th:text="${reviewDto.id} == null ? '➕ 리뷰 등록' : '✏️ 리뷰 수정'"></h1>
+
+<div th:if="${error}" class="error" th:text="${error}"></div>
+<form th:action="${reviewDto.id} == null
+                    ? @{|/${movie.id}/addReview|}
+                    : @{|/${movie.id}/editReview/${reviewDto.id}|}" th:object="${reviewDto}" method="post" class="form-container">
+    <input type="hidden" th:field="*{id}">
+    <p>
+        <label>
+            평점:
+            <input type="number" th:field="*{rating}" />
+        </label>
+    <div th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
+    </p>
+    <p>
+        <label>
+            평가:
+            <input type="text" th:field="*{comment}" />
+        </label>
+    <div th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
+    </p>
+    <p>
+        <label>
+            평가자:
+            <input type="text" th:field="*{reviewer}" />
+        </label>
+    <div th:if="${#fields.hasErrors('reviewer')}" th:errors="*{reviewer}"></div>
+    </p>
+    <button type="submit">저장</button>
+    <a th:href="@{|/${movie.id}/reviews|}" class="cancel">취소</a>
+</form>
+</body>
+</html>
